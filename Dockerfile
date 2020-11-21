@@ -1,20 +1,13 @@
-FROM archlinux/base
+FROM ubuntu
 
 WORKDIR /opt
 
-RUN echo 'Server = http://mirror.one.com/archlinux/$repo/os/$arch' > /etc/pacman.d/mirrorlist && \
-    yes | pacman -Syyu && \
-    pacman --noconfirm -S base-devel wget sudo vi && \
+RUN apt-get update -y && \
+    apt-get upgrade -y && \
+    apt-get install -y build-essential wget curl sudo vim && \
     useradd -m docker && echo "docker:docker" | chpasswd && \
     chown docker:docker /opt && \
-    echo "docker ALL=(ALL) NOPASSWD: ALL" >> /etc/sudoers && \
-    sudo -u docker bash -c "\
-        wget https://aur.archlinux.org/cgit/aur.git/snapshot/yay-bin.tar.gz && \
-        tar xf yay-bin.tar.gz && \
-        (cd yay-bin && yes | makepkg -s --skippgpcheck) && \
-        (cd yay-bin && sudo pacman --noconfirm -U *.pkg.tar*) && \
-        yay --noconfirm -S asp \
-    "
+    echo "docker ALL=(ALL) NOPASSWD: ALL" >> /etc/sudoers
 
 USER docker
 
