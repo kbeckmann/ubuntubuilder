@@ -19,7 +19,7 @@ RUN apt-get update -y && \
     chown docker:docker /opt && \
     echo "docker ALL=(ALL) NOPASSWD: ALL" >> /etc/sudoers
 
-ENV GCC_PATH=/opt/gcc-arm-none-eabi-10-2020-q4-major
+ENV GCC_PATH=/opt/gcc-arm-none-eabi-10-2020-q4-major/bin
 
 USER docker
 
