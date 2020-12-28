@@ -4,6 +4,7 @@ on:
   push:
     branches:
       - master
+      - ubuntubuilder-arm
   schedule:
     - cron: "0 0 * * *"
 
